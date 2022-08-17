@@ -3,7 +3,7 @@ import Feed from "../components/Feed";
 import Sidebar from "../components/sidebar";
 import Widgets from "../components/Widgets";
 
-export default function Home({newsResults}) {
+export default function Home({ newsResults, randomUsersResults }) {
   return (
     <div>
       <Head>
@@ -17,7 +17,10 @@ export default function Home({newsResults}) {
         {/* Feed */}
         <Feed />
         {/* Widgets */}
-        <Widgets newsResults={newsResults.articles}/>
+        <Widgets
+          newsResults={newsResults.articles}
+          randomUsersResults={randomUsersResults.results}
+        />
       </main>
     </div>
   );
@@ -31,9 +34,15 @@ const url =
 export async function getServerSideProps() {
   const newsResults = await fetch(url).then((res) => res.json());
 
+  // "Who to follow" in Widgets section
+  const urlForUsers =
+    "https://randomuser.me/api/?results=30&inc=name,login,picture";
+  const randomUsersResults = await fetch(urlForUsers).then((res) => res.json());
+
   return {
     props: {
       newsResults,
+      randomUsersResults,
     },
   };
 }
