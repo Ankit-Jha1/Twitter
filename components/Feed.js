@@ -1,4 +1,5 @@
 import { SparklesIcon } from "@heroicons/react/outline";
+import Input from "./Input";
 
 
 export default function Feed() {
@@ -11,7 +12,9 @@ export default function Feed() {
           <SparklesIcon className="h-5" />
         </div>
       </div>
-      Feed
+
+      {/* Input component for user to tweet */}
+      <Input/>
     </div>
   );
 }
