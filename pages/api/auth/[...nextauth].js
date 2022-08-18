@@ -14,6 +14,7 @@ export default NextAuth({
     signIn: "/auth/signin",
   },
 
+  secret: process.env.SECRET,
   // making twitter handle using username from session
   callbacks: {
     async session({ session, token }) {
