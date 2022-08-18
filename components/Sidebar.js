@@ -72,7 +72,7 @@ export default function Sidebar() {
           ) : (
             <button
               onClick={signIn}
-              className="bg-blue-400 text-white rounded-full w-56 h-12 font-bold shadow-lg hover:brightness-95 text-lg hidden xl:inline"
+              className="bg-blue-400 text-white rounded-full w-56 h-12 font-bold shadow-lg hover:brightness-95 text-lg xl:inline"
             >
               Sign In
             </button>
