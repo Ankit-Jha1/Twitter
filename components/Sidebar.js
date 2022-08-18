@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { HomeIcon } from "@heroicons/react/solid";
 import SidebarMenuItem from "./SidebarMenuItem";
+import { useSession } from "next-auth/react";
+import { signOut, signIn } from "next-auth/react";
 import {
   BellIcon,
   BookmarkIcon,
@@ -13,6 +15,8 @@ import {
 } from "@heroicons/react/outline";
 
 export default function Sidebar() {
+  const { data: session } = useSession();
+
   return (
     <div className="hidden sm:flex flex-col p-2 xl:items-start fixed h-full xl:ml-24">
       {/* Twitter Logo */}
@@ -28,32 +32,53 @@ export default function Sidebar() {
       <div className="mt-4 mb-2.5 xl:items-start">
         <SidebarMenuItem text="Home" Icon={HomeIcon} active />
         <SidebarMenuItem text="Explore" Icon={HashtagIcon} />
-        <SidebarMenuItem text="Notifications" Icon={BellIcon} />
-        <SidebarMenuItem text="Messages" Icon={InboxIcon} />
-        <SidebarMenuItem text="Bookmarks" Icon={BookmarkIcon} />
-        <SidebarMenuItem text="Lists" Icon={ClipboardIcon} />
-        <SidebarMenuItem text="Profile" Icon={UserIcon} />
-        <SidebarMenuItem text="More" Icon={DotsCircleHorizontalIcon} />
+        {session && (
+          <>
+            <SidebarMenuItem text="Notifications" Icon={BellIcon} />
+            <SidebarMenuItem text="Messages" Icon={InboxIcon} />
+            <SidebarMenuItem text="Bookmarks" Icon={BookmarkIcon} />
+            <SidebarMenuItem text="Lists" Icon={ClipboardIcon} />
+            <SidebarMenuItem text="Profile" Icon={UserIcon} />
+            <SidebarMenuItem text="More" Icon={DotsCircleHorizontalIcon} />
+          </>
+        )}
       </div>
 
       {/* button */}
-      <button className="bg-blue-400 text-white rounded-full w-56 h-12 font-bold shadow-lg hover:brightness-95 text-lg hidden xl:inline">
-        Tweet
-      </button>
-
-      {/* mini profile */}
-      <div className="hoverEffect text-gray-700 flex items-center justify-center xl:justify-start mt-auto">
-        <img
-          src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Y29vbCUyMGNhdHxlbnwwfHwwfHw%3D&w=1000&q=80"
-          alt="user-img"
-          className="h-10 w-10 rounded-full xl:mr-2"
-        />
-        <div>
-          <h4 className="font-bold">Ankit Jha</h4>
-          <p className="text-gray-500">@yoyoCat</p>
-        </div>
-        <DotsHorizontalIcon className="h-5 xl:ml-8 hidden xl:inline" />
-      </div>
+      {
+        <>
+          {session ? (
+            <>
+              <button
+                onClick={signOut}
+                className="bg-blue-400 text-white rounded-full w-56 h-12 font-bold shadow-lg hover:brightness-95 text-lg hidden xl:inline"
+              >
+                Sign Out
+              </button>
+              {/* mini profile */}
+              <div className="hoverEffect text-gray-700 flex items-center justify-center xl:justify-start mt-auto">
+                <img
+                  src={session.user.image}
+                  alt="user-img"
+                  className="h-10 w-10 rounded-full xl:mr-2"
+                />
+                <div>
+                  <h4 className="font-bold">{session.user.name}</h4>
+                  <p className="text-gray-500">@{session.user.username}</p>
+                </div>
+                <DotsHorizontalIcon className="h-5 xl:ml-8 hidden xl:inline" />
+              </div>
+            </>
+          ) : (
+            <button
+              onClick={signIn}
+              className="bg-blue-400 text-white rounded-full w-56 h-12 font-bold shadow-lg hover:brightness-95 text-lg hidden xl:inline"
+            >
+              Sign In
+            </button>
+          )}
+        </>
+      }
     </div>
   );
 }
