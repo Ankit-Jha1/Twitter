@@ -87,7 +87,7 @@ export default function Input() {
               <img
                 src={session.user.image}
                 alt="user-img"
-                className="h-11 w-11 rounded-full cursor-pointer hover:brightness-95"
+                className="h-10 w-11 rounded-full cursor-pointer hover:brightness-50"
               />
             </div>
             <div className="w-full divide-y divide-gray-200">

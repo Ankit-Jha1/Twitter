@@ -6,13 +6,15 @@ import {
   ShareIcon,
   TrashIcon,
 } from "@heroicons/react/outline";
+import { Timestamp } from "firebase/firestore";
+import Moment from "react-moment";
 
 export default function Post({ post }) {
   return (
     <div className="flex p-3 cursor-pointer border-b border-gray-200">
       {/* user image */}
       <img
-        src={post.data().UserImg}
+        src={post.data().userImg}
         alt="user-img"
         className="h-11 w-11 rounded-full mr-4"
       />
@@ -32,6 +34,7 @@ export default function Post({ post }) {
             </span>
             <span className="text-sm sm:text-[15px] hover:underline">
               {post.timestamp}
+              <Moment fromNow>{post?.timestamp?.toDate()}</Moment>
             </span>
           </div>
           {/* dot icon */}
@@ -44,11 +47,13 @@ export default function Post({ post }) {
         </p>
 
         {/* post uploaded image */}
-        {
-          post.data().img && (<img 
+        {post.data().image && (
+          <img
             className="rounded-2xl mr-2"
-            src={post.data().img} alt="uploaded-img" />)
-        }
+            src={post.data().image}
+            alt="uploaded-img"
+          />
+        )}
 
         {/* icons */}
         <div className="flex justify-between text-gray-500 p-2">
