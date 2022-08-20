@@ -13,6 +13,7 @@ import {
   InboxIcon,
   UserIcon,
 } from "@heroicons/react/outline";
+import Link from "next/link";
 
 export default function Sidebar() {
   const { data: session } = useSession();
@@ -30,11 +31,25 @@ export default function Sidebar() {
 
       {/* Menu */}
       <div className="mt-4 mb-2.5 xl:items-start">
-        <SidebarMenuItem text="Home" Icon={HomeIcon} active />
-        <SidebarMenuItem text="Explore" Icon={HashtagIcon} />
+        <SidebarMenuItem
+          text="Home"
+          Icon={HomeIcon}
+          active
+          redirectlink={"/"}
+        />
+
+        <SidebarMenuItem
+          text="Explore"
+          Icon={HashtagIcon}
+          redirectlink={"/ExplorePage"}
+        />
         {session && (
           <>
-            <SidebarMenuItem text="Notifications" Icon={BellIcon} />
+            <SidebarMenuItem
+              text="Notifications"
+              Icon={BellIcon}
+              redirectlink={"/Notifications"}
+            ></SidebarMenuItem>
             <SidebarMenuItem text="Messages" Icon={InboxIcon} />
             <SidebarMenuItem text="Bookmarks" Icon={BookmarkIcon} />
             <SidebarMenuItem text="Lists" Icon={ClipboardIcon} />
